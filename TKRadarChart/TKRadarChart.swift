@@ -191,7 +191,6 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
         let numOfSection = dataSource.numberOfSectionForRadarChart(self)
         let perAngle = CGFloat.pi * 2 / CGFloat(numOfRow) * CGFloat(configuration.clockwise ? 1 : -1)
         let padding = CGFloat(2)
-        let height = textFont.lineHeight
         let radius = configuration.radius
         let minValue = configuration.minValue
         let maxValue = configuration.maxValue
@@ -206,7 +205,8 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
             let pointOnEdge = CGPoint(x: centerPoint.x - radius * sin(i * perAngle),
                                       y: centerPoint.y - radius * cos(i * perAngle))
             let attributeTextSize = (title as NSString).size(withAttributes: [NSAttributedStringKey.font: textFont])
-            
+          
+            let height = attributeTextSize.height
             let width = attributeTextSize.width
             let xOffset = pointOnEdge.x >=  centerPoint .x ? width / 2.0 + padding : -width / 2.0 - padding
             let yOffset = pointOnEdge.y >=  centerPoint .y ? height / 2.0 + padding : -height / 2.0 - padding
