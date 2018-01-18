@@ -202,16 +202,19 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
         for index in 0..<numOfRow {
             let i = CGFloat(index)
             let title = dataSource.titleOfRowForRadarChart(self, row: index)
-            let pointOnEdge = CGPoint(x: centerPoint.x - radius * sin(i * perAngle),
-                                      y: centerPoint.y - radius * cos(i * perAngle))
+            let pointOnEdge = CGPoint(x: round(centerPoint.x - radius * sin(i * perAngle)),
+                                      y: round(centerPoint.y - radius * cos(i * perAngle)))
             let attributeTextSize = (title as NSString).size(withAttributes: [NSAttributedStringKey.font: textFont])
           
             let height = attributeTextSize.height
             let width = attributeTextSize.width
-            let xOffset = pointOnEdge.x >=  centerPoint .x ? width / 2.0 + padding : -width / 2.0 - padding
-            let yOffset = pointOnEdge.y >=  centerPoint .y ? height / 2.0 + padding : -height / 2.0 - padding
+            let xOffset = pointOnEdge.x >=  centerPoint.x ? width / 2.0 + padding : -width / 2.0 - padding
+            var yOffset = pointOnEdge.y > centerPoint.y ? height / 2.0 + padding : -height / 2.0 - padding
+            if abs(pointOnEdge.y - centerPoint.y) < padding  {
+              yOffset = pointOnEdge.y > centerPoint.y ? padding - abs(pointOnEdge.y - centerPoint.y) : -padding + abs(pointOnEdge.y - centerPoint.y)
+            }
             var legendCenter = CGPoint(x: pointOnEdge.x + xOffset, y: pointOnEdge.y + yOffset)
-            
+          
             let paragraphStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
             paragraphStyle.alignment = .center
             paragraphStyle.lineBreakMode = .byClipping
