@@ -27,6 +27,7 @@ public protocol TKRadarChartDelegate: class {
     
     func colorOfSectionFillForRadarChart(_ radarChart: TKRadarChart, section: Int) -> UIColor
     func colorOfSectionBorderForRadarChart(_ radarChart: TKRadarChart, section: Int) -> UIColor
+    func colorOfSectionBorderDotForRadarChart(_ radarChart: TKRadarChart, section: Int) -> UIColor
     
     func fontOfTitleForRadarChart(_ radarChart: TKRadarChart) -> UIFont
     func colorOfTitleForRadarChart(_ radarChart: TKRadarChart) -> UIColor
@@ -55,6 +56,10 @@ extension TKRadarChartDelegate {
     }
     
     public func colorOfSectionBorderForRadarChart(_ radarChart: TKRadarChart, section: Int) -> UIColor {
+        return UIColor(red:1,  green:0.867,  blue:0.012, alpha:1)
+    }
+    
+    public func colorOfSectionBorderDotForRadarChart(_ radarChart: TKRadarChart, section: Int) -> UIColor {
         return UIColor(red:1,  green:0.867,  blue:0.012, alpha:1)
     }
     
@@ -331,7 +336,7 @@ public class TKRadarChart: UIView, TKRadarChartDelegate {
                 
                 // Draw point
                 if configuration.showPoint {
-                    let borderColor = delegate.colorOfSectionBorderForRadarChart(self, section: section)
+                    let borderColor = delegate.colorOfSectionBorderDotForRadarChart(self, section: section)
                     for i in 0..<numOfRow {
                         let value = dataSource.valueOfSectionForRadarChart(withRow: i, section: section)
                         let xt = radius * sin(CGFloat(i) * perAngle)
